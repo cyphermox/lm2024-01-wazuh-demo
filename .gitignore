@@ -1,0 +1,7 @@
+.terraform*
+*.tfstate*
+admin-password
+id_rsa
+id_rsa.pub
+wazuh.sh
+agent.sh

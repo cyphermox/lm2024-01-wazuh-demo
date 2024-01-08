@@ -1,0 +1,55 @@
+# Démarrage rapide
+
+tofu init
+tofu apply
+./wazuh.sh
+curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
+
+
+# Documentation
+
+https://documentation.wazuh.com/current/quickstart.html
+
+
+# Modifications à ossec.conf
+
+<wodle name="syscollector">
+   <disabled>no</disabled>
+   <interval>1h</interval>
+   <os>yes</os>
+   <packages>yes</packages>
+   <hotfixes>yes</hotfixes>
+</wodle>
+
+<vulnerability-detector>
+   <enabled>yes</enabled>
+   <interval>5m</interval>
+   <min_full_scan_interval>6h</min_full_scan_interval>
+   <run_on_start>yes</run_on_start>
+
+   <!-- Ubuntu OS vulnerabilities -->
+   <provider name="canonical">
+      <enabled>yes</enabled>
+      <os>trusty</os>
+      <os>xenial</os>
+      <os>bionic</os>
+      <os>focal</os>
+      <os>jammy</os>
+      <update_interval>1h</update_interval>
+   </provider>
+
+   <!-- Debian OS vulnerabilities -->
+   <provider name="debian">
+      <enabled>yes</enabled>
+      <os>buster</os>
+      <os>bullseye</os>
+      <os>bookworm</os>
+      <update_interval>1h</update_interval>
+   </provider>
+
+   <!-- Aggregate vulnerabilities -->
+   <provider name="nvd">
+      <enabled>yes</enabled>
+      <update_interval>1h</update_interval>
+   </provider>
+</vulnerability-detector>
